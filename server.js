@@ -18,8 +18,8 @@ server.listen(port, (err) => {
 // global data
 var players = [];  // all connected players will be stored here
 var transitions = []; // store the positions of the transition objects
-var clientId = 0;  // unique ID for every client
-const fps = 30;
+var clientID = 0;  // unique ID for every client
+const fps = 60;
 
 class Player {
 
@@ -40,11 +40,11 @@ class Player {
     }
 
     // animation and movement
-    this.spd = 2;
+    this.spd = 1;
     this.frame_size = 32;
 
     this.anim_length = 4;
-    this.anim_speed = 6;
+    this.anim_speed = 12;
     this.frame_speed = this.anim_speed / fps;
 
     this.spr_left = 0;
@@ -163,7 +163,9 @@ class Transition {
 }
 
 io.on('connection', (client) => {
-  var playerID = clientId++;
+  var playerID = clientID++;
+
+  if (clientID >= Number.MAX_SAFE_INTEGER) clientID = 0;
   var player;
 
   console.log(`Player "${playerID}" connected`);
@@ -215,13 +217,15 @@ setInterval(() => {
 
   if (players.length > 0) {
     players.forEach((player, index) => {
-      player.updatePosition();
       var room = player.checkTransitions(transitions);
       if (room != undefined) {
         player.socket.emit('change_room', JSON.stringify({'dest_room': room}));
-      }
+      };
+      player.updatePosition();
     });
-    //TODO: don't send full player data
-    io.emit('position_update', JSON.stringify(players));
   }
 }, 1000 / fps);
+
+setInterval(() => {
+  io.emit('position_update', JSON.stringify(players));
+}, 1000 / (fps * 2));
