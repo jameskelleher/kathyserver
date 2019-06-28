@@ -228,4 +228,4 @@ setInterval(() => {
 
 setInterval(() => {
   io.emit('position_update', JSON.stringify(players));
-}, 1000 / (fps * 2));
+}, 1000 / (fps * 1.5));
