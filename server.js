@@ -30,7 +30,7 @@ class Player {
     this.playerID = data.playerID;
 
     // might need to change this later
-    this.room = 0;
+    this.room = 1;
 
     // initialize keys
     this.keys = {}
@@ -53,6 +53,11 @@ class Player {
     // initialize animation frame to just before movement
     this.x_frame = 1 - this.frame_speed
     this.facing = Facing.DOWN;
+
+    // initialize sprites indices
+    this.spr_body = 0;
+    this.spr_outfit = 0;
+    this.spr_hair = 0;
   }
 
   toJSON() {
@@ -146,6 +151,12 @@ class Player {
     // maybe do this in the client?
     this.spr_left = Math.floor(this.x_frame) * this.frame_size;
     this.spr_top = this.facing * this.frame_size;
+  }
+
+  setSprites(spr_body, spr_outfit, spr_hair) {
+    this.spr_body = spr_body;
+    this.spr_outfit = spr_outfit;
+    this.spr_hair = spr_hair;
   }
 }
 
