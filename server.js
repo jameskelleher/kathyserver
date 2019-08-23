@@ -30,7 +30,7 @@ class Player {
     this.playerID = data.playerID;
 
     // might need to change this later
-    this.room = 1;
+    this.room = 0;
 
     // initialize keys
     this.keys = {}
