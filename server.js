@@ -30,7 +30,7 @@ class Player {
     this.playerID = data.playerID;
 
     // might need to change this later
-    this.room = 0;
+    this.room = 1;
 
     // initialize keys
     this.keys = {}
@@ -67,6 +67,9 @@ class Player {
       "spr_left": this.spr_left,
       "spr_top": this.spr_top,
       "room": this.room,
+      "spr_body": this.spr_body,
+      "spr_outfit": this.spr_outfit,
+      "spr_hair": this.spr_hair,
     };
   }
 
@@ -188,7 +191,6 @@ io.on('connection', (client) => {
     playerID: playerID,
   });
 
-  console.log(player.toString());
   // add to players list
   players.push(player);
 
@@ -220,6 +222,14 @@ io.on('connection', (client) => {
         transitions.push(t);
       });
       console.log(transitions);
+  });
+
+  client.on('send_character_sprite', (data) => {
+      data = JSON.parse(data);
+      console.log('updating sprite')
+      player.spr_body = data.spr_body;
+      player.spr_outfit = data.spr_outfit;
+      player.spr_hair = data.spr_hair;
   });
 
 });
