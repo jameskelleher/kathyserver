@@ -14,7 +14,4 @@ const Facing = {
 }
 Object.freeze(Facing);
 
-module.exports = {
-  key: Key,
-  facing: Facing,
-}
+export {Key, Facing}

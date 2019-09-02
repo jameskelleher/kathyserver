@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "esm": "^3.2.25",
     "socket.io": "^2.2.0"
   },
   "engines": {
