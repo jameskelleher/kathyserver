@@ -9,8 +9,8 @@ class Player {
       this.socket = data.socket;
       this.playerID = data.playerID;
   
-      // might need to change this later
-      this.room = 1;
+      // initialize to a room that doesn't exist
+      this.room_id = -1;
   
       // initialize keys
       this.keys = {}
@@ -31,7 +31,7 @@ class Player {
       this.spr_top = 0;
   
       // initialize animation frame to just before movement
-      this.x_frame = 1 - this.frame_speed
+      this.x_frame = 1 - this.frame_speed;
       this.facing = Facing.DOWN;
   
       // initialize sprites indices
@@ -46,7 +46,7 @@ class Player {
         "y": this.y,
         "spr_left": this.spr_left,
         "spr_top": this.spr_top,
-        "room": this.room,
+        "room_id": this.room_id,
         "spr_body": this.spr_body,
         "spr_outfit": this.spr_outfit,
         "spr_hair": this.spr_hair,
@@ -63,7 +63,7 @@ class Player {
     }
   
     checkTransition(t) {
-      if (this.room != t.room) return undefined;
+      if (this.room_id != t.room) return undefined;
   
       var xx = this.x + this.frame_size * 0.5;
       var yy = this.y + this.frame_size * 0.666;
@@ -82,7 +82,7 @@ class Player {
           && t.y < yy
           && yy < t.y + t.h) {
         console.log(`Player "${this.playerID}" transition to "${t.dest_room}"`)
-        this.room = t.dest_room;
+        this.room_id = t.dest_room;
         this.x = t.dest_x;
         this.y = t.dest_y;
         this.x_frame = 0;
@@ -136,10 +136,12 @@ class Player {
       this.spr_top = this.facing * this.frame_size;
     }
   
-    setSprites(spr_body, spr_outfit, spr_hair) {
+    setSprites(spr_body, spr_outfit, spr_hair, room_id) {
       this.spr_body = spr_body;
       this.spr_outfit = spr_outfit;
       this.spr_hair = spr_hair;
+
+      this.room_id = room_id;
     }
   }
 

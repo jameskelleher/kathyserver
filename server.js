@@ -72,9 +72,11 @@ io.on('connection', (client) => {
   client.on('send_character_sprite', (data) => {
       data = JSON.parse(data);
       console.log('updating sprite')
-      player.spr_body = data.spr_body;
-      player.spr_outfit = data.spr_outfit;
-      player.spr_hair = data.spr_hair;
+      player.setSprites(
+        data.spr_body,
+        data.spr_outfit,
+        data.spr_hair,
+        data.room_id)
   });
 
 });
